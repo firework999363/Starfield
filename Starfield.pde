@@ -1,17 +1,14 @@
-double x, y, angle;
 NormalParticle[] bob;
 void setup()
 {
 	noStroke();
 	background(0);
 	size(500,500);
-	x=250;
-	y=250;
-	angle=0;
-	bob = new NormalParticle[40];
+	
+	bob = new NormalParticle[200];
   	for (int i=0; i< bob.length; i++)
   	{
-  	  bob[i] = new NormalParticle(x,y,Math.random()*3);
+  	  bob[i] = new NormalParticle(250,250);
   	}
 }
 void draw()
@@ -25,21 +22,19 @@ void draw()
 }
 class NormalParticle
 {
-	double myX,myY,speed;
+	double myX,myY,speed,angle;
 	int c;
-	NormalParticle(double x, double y, double angle)
+	NormalParticle(int x, int y)
 	{
 		myX=x;
 		myY=y;
-		speed=2;
+		speed=Math.random()*10+0.001;
+		angle = Math.cos(Math.random()*2)*Math.PI*2;
 	}
 	void move()
 	{
-		x = myX + (Math.cos((float)angle)*speed);
-		y = myY + (Math.sin((float)angle)*speed);
-		System.out.println(myX);
-		myX=x;
-		myY=y;
+		myX = myX + (Math.cos((float)angle)*speed);
+		myY = myY + (Math.sin((float)angle)*speed);
 	}
 	void show()
 	{
