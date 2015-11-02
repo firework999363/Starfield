@@ -74,7 +74,7 @@ class NormalParticle implements Particle
 	{
 		myX=250;
 		myY=250;
-		speed=Math.random()*8+0.001;
+		speed=Math.random()*4+0.001;
 		angle = Math.cos(Math.random()*2)*Math.PI*2;
 		size = (int)(Math.random()*30)+5;
 		r = (int)(Math.random()*256);
@@ -120,7 +120,7 @@ class OddballParticle implements Particle//uses an interface
 	}
 	public void show()
 	{
-		fill(r,g,b,170);
+		fill(r,g,b,200);
 		ellipse((float)myX,(float)myY,size,size);
 	}
 }
@@ -133,7 +133,7 @@ class JumboParticle extends OddballParticle //uses inheritance
 	}
 	public void show()
 	{
-		fill(r,g,b, 200);
+		fill(r,g,b, 100);
 		ellipse((float)myX,(float)myY,size,size);
 	}
 }
