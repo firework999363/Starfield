@@ -1,41 +1,79 @@
 Particle[] bob;
+int n;
+double a = 0;
 void setup()
 {
 	noStroke();
 	background(0);
 	size(500,500);
 	
-	bob = new Particle[300];
+	bob = new Particle[900];
   	for (int i=0; i< bob.length; i++)
   	{
-  	  bob[i] = new OddBallParticle(250,250);
+  		if (i>0 && i< bob.length/3)
+  		{
+  			bob[i] = new JumboParticle();
+  		}
+  		else if (i>bob.length/3 && i< bob.length*2/3)
+  		{
+  			bob[i] = new NormalParticle();
+  		}
+  		else
+  		{
+  			bob[i] = new OddballParticle();
+  		}
   	}
+  	n = 2*bob.length/3 + 1;
 }
 void draw()
 {
 	background(0);
-	for (int i=0; i< bob.length; i++)
+	bob[0].move();
+	bob[0].show();
+	for (int i=0; i< 2*bob.length/3; i++)
 	{
 		bob[i].move();
 		bob[i].show();
 	}
+	for (int i= 2*bob.length/3 + 1; i< n; i++)
+	{
+		bob[i].move();
+		bob[i].show();
+	}
+	if ( n < bob.length )
+	{
+		n = n + 1;
+	}
 }
 void mousePressed()
 {
-	bob = new Particle[300];
+	n = 2*bob.length/3 + 1;
+	a = 0;
+	bob = new Particle[900];
   	for (int i=0; i< bob.length; i++)
   	{
-  	  bob[i] = new OddballParticle(mouseX,mouseY);
+  		if (i>0 && i< bob.length/3)
+  		{
+  			bob[i] = new JumboParticle();
+  		}
+  		else if (i>bob.length/3 && i< bob.length*2/3)
+  		{
+  			bob[i] = new NormalParticle();
+  		}
+  		else
+  		{
+  			bob[i] = new OddballParticle();
+  		}
   	}
 }
 class NormalParticle implements Particle
 {
 	double myX,myY,speed,angle;
 	int r,g,b, size;
-	NormalParticle(int x, int y)
+	NormalParticle()
 	{
-		myX=x;
-		myY=y;
+		myX=250;
+		myY=250;
 		speed=Math.random()*8+0.001;
 		angle = Math.cos(Math.random()*2)*Math.PI*2;
 		size = (int)(Math.random()*30)+5;
@@ -50,7 +88,7 @@ class NormalParticle implements Particle
 	}
 	public void show()
 	{
-		fill(r,g,b,100);
+		fill(r,g,b,80);
 		ellipse((float)myX,(float)myY,size,size);
 	}
 }
@@ -63,16 +101,17 @@ class OddballParticle implements Particle//uses an interface
 {
 	double myX,myY,speed,angle;
 	int r,g,b, size;
-	OddballParticle(int x, int y)
+	OddballParticle()
 	{
-		myX=x;
-		myY=y;
-		speed=Math.random()*8+0.001;
-		angle = Math.cos(Math.random()*2)*Math.PI*2;
-		size = (int)(Math.random()*30)+5;
+		myX=250;
+		myY=250;
+		speed=Math.random()*5+2.001;
+		angle = Math.cos(a)*Math.PI*2;
+		size = (int)(Math.random()*10)+18;
 		r = (int)(Math.random()*256);
 		g = (int)(Math.random()*256);
 		b = (int)(Math.random()*256);
+		a = a + 0.015;
 	}
 	public void move()
 	{
@@ -81,12 +120,21 @@ class OddballParticle implements Particle//uses an interface
 	}
 	public void show()
 	{
-		fill(r,g,b,100);
+		fill(r,g,b,170);
 		ellipse((float)myX,(float)myY,size,size);
 	}
 }
-class JumboParticle //uses inheritance
+class JumboParticle extends OddballParticle //uses inheritance
 {
-	
+	JumboParticle()
+	{
+		speed = 2;
+		size = 30;
+	}
+	public void show()
+	{
+		fill(r,g,b, 200);
+		ellipse((float)myX,(float)myY,size,size);
+	}
 }
 
